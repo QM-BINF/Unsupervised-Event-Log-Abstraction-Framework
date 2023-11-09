@@ -1,0 +1,117 @@
+import org.processmining.models.graphbased.directed.petrinet.Petrinet;
+import org.processmining.models.graphbased.directed.petrinet.PetrinetGraph;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.*;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import java.lang.*;
+import java.sql.Timestamp;
+
+import java.io.IOException;
+
+importlog = System.getenv("IMPORTLOG");
+logname = importlog.replace(".xes.gz", "").replace("EventLogs", "");
+
+scratch = System.getenv("SCRATCH");
+
+
+
+
+
+
+
+// print("===================================================");
+
+print("Total Memory: " + Runtime.getRuntime().totalMemory());
+print("Max Memory:   " + Runtime.getRuntime().maxMemory());
+
+print("Current event log: " + importlog);
+org.deckfour.xes.model.XLog log = open_xes_log_file_xeslite_in_memory_slow_random_access_(importlog);
+// open_xes_log_file_naive_(importlog);
+// open_xes_log_file_xeslite_mapdb_no_cache_(importlog);
+// open_xes_log_file(importlog);
+
+abstractedLog = log;
+
+choice = (int) (Math.random() * 2);
+String miner;
+Petrinet[] patterns;
+String[] names;
+boolean canAbstract;
+int n;
+
+miner = "LPM";
+// print("=====");
+
+Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+System.out.println(timestamp);
+results = mine_and_process_local_process_models(log);
+Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+System.out.println(timestamp);
+
+patternsList = new java.util.ArrayList();
+namesList = new java.util.ArrayList();
+
+if(results.getSize() > 0) {
+	
+	n = Math.min(results.getSize(), 15);
+	n = 1 + (int) (Math.random() * n);
+	
+	print("Results obtained: " + results.getSize() + ". Making abstraction with " + n + " patterns.");
+	
+	for(int i = 0; i < n; i++) {
+		lpm = results.getNet(i);
+		PetriNet = lpm.getAcceptingPetriNet().getNet();
+		
+		testNet = new Petrinet[1];
+		testNet[0] = PetriNet;
+		testName = new String[1];
+		testName[0] = "test";
+		
+		try {
+			log_abstraction_via_cli(log, testNet, testName);
+		
+			netexportdir = new java.io.File(scratch + "/LPM").mkdirs();
+			netexportname = scratch + "/LPM" + logname + "-LPM" + i + ".pnml";
+			netexportfile = new java.io.File(netexportname);
+			pnml_export_petri_net_(PetriNet, netexportfile);
+			PetriNet = import_petri_net_from_pnml_file(netexportname);
+			
+			patternsList.add(PetriNet[0]);
+			namesList.add("LPM " + i);
+			print("--- LPM pattern " + i + " is valid. ---");
+		}
+		catch(Exception e) {
+			print("--- LPM pattern " + i + " is NOT valid. ---");
+		}
+	}	
+}
+
+if(patternsList.size() > 0) {
+	print("Final Abstraction with " + patternsList.size() + " patterns.");
+	canAbstract = true;
+	
+	patterns = patternsList.toArray(new Petrinet[0]);
+	names = namesList.toArray(new String[0]);
+}
+
+if (canAbstract) {
+	abstractedLog = log_abstraction_via_cli(log, patterns, names);
+}
+else {
+	n = 0;
+	print("No valid patterns. Writing original log as result.");
+}
+
+
+exportdir = new java.io.File(scratch + "/ABSTRACTION/LPM").mkdirs();
+exportname = scratch + "/ABSTRACTION/LPM" + logname + "-" + miner + "-" + patternsList.size() + ".xes.gz";
+exportfile = new java.io.File(exportname);
+print("Exporting abstracted event log to " + exportname);
+org.processmining.plugins.log.exporting.ExportLogXesGz.export(abstractedLog, exportfile);
+
+exit();
