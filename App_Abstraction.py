@@ -20,8 +20,8 @@ if __name__ == "__main__":
 
     #Prepare the log list
     data = pd.read_csv("EventLogs.csv")
-    # logs = [x for x in data["log"]]
-    logs = [x for x in data["log"] if not os.path.isfile(os.path.join(".AbstractedLogs", x.replace(".xes.gz", "_AbstractedLog.xes")))]
+    logs = [x for x in data["log"]]
+    # logs = [x for x in data["log"] if not os.path.isfile(os.path.join(".AbstractedLogs", x.replace(".xes.gz", "_AbstractedLog.xes")))]
     print(logs)
 
     #Parameters for K-Means

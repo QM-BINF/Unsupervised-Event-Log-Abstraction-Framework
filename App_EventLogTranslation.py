@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
 
     # Start the iterations: for each log file in Logs
-    for log in os.scandir("Logs"):
+    for log in os.scandir(os.path.join("Logs", ".log")):
         logname : str = os.path.basename(log)
         xesname = logname.replace(".log", ".xes")
 
