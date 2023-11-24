@@ -74,7 +74,7 @@ The root folder of the repository contains a number of `app_` python files.
 
     In essence, this application loads all event logs on the low- and high-level along with their discovered process models (in Petri Net format). The next step is to *expand* the high-level process models in order to achieve the complete mapping in terms of event classes between the low-level event log and the high-level process model. This step is important as we desire to see how accurately the abstracted process still describes the original data. To that end, all discovered LPM patterns and session-based clusters are re-inserted into the high-level process model. See the section *Methodology* for more information.
 
-    Finally, this application stores all output in their respective folders.
+    Finally, this application stores all output in their respective folders. The conformance checking results are by default stored in a `Stats` folder, where each event log outcomes are saved in a separate CSV file.
 
 - `App_EventLogTranslation.py`
 
