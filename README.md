@@ -92,7 +92,7 @@ The root folder of the repository contains a number of `app_` python files.
 
 Each application contains an example execution of the script. The logical order of execution of these programs would be as follows:
 
-1. Simulate event logs through `app_BPSimulation.py`. Even though our execution only used the `PT and Log Generator` tool in `PM4Py` for Process Tree generation, one can also use it as an alternative to generate the event logs themselves. We only required `App_EventLogTranslation.py` because of the use of L-Sim.
+1. Simulate event logs through `app_BPSimulation.py`. Even though our execution only used the `PT and Log Generator` tool in `PM4Py` for Process Tree generation, one can also use it as an alternative to generate the event logs themselves. We only required `App_EventLogTranslation.py` because of the use of L-Sim, and therefore, the requirement for start timestamps too.
 
 2. Abstract the event logs with your given technique. In our execution, the session-based approach is available through `App_Abstraction.py` and the LPM-based approach is available as CLI application through `src/VSC-Experiment-LPM.txt`.
 
