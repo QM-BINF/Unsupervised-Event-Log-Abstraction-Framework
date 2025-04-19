@@ -1,4 +1,4 @@
-Unsupervised-ELA-Framework
+Unsupervised Event Log Abstraction Framework
 ============================
 
 ## Introduction
