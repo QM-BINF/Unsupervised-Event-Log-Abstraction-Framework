@@ -5,6 +5,8 @@ Unsupervised Event Log Abstraction Framework
 
 This repository contains the source code, simulation models, and event logs for the **Unsupervised Event Log Abstraction** project as submitted to Information Systems (version 2023/11/10). The repository contains python, R, and Java code.
 
+- Published paper: https://doi.org/10.1016/j.is.2023.102320
+
 This project is licensed under the Apache 2.0 License.
 
 ## Cloning the Repository
